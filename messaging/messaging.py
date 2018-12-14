@@ -12,6 +12,9 @@ customizations. For example, a badge is added to messages that are sent to iOS d
 import argparse
 import json
 import requests
+import random
+import string
+from datetime import datetime
 
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -71,6 +74,23 @@ def _build_common_message():
     }
   }
 
+def _build_specific_message(payload):
+  """Construct common notifiation message.
+
+  Construct a JSON object that will be used to define the
+  common parts of a notification message that will be sent
+  to any app instance subscribed to the news topic.
+  """
+  return {
+    'message': {
+      'token': 'dtV4OImuR2w:APA91bELHmd9MDpnOKj4j6CZxrGyuYp6nSplILc7Hh8oEOdUILi6R_DCJ5-pKK2mKizPD_m4__7dfq37nMVCYE1gd4L964zTXZUxqR4VdjEfFvDu4eZf6VFCCy-VunDRy2q_KXEE-xBX',
+      'notification': {
+        'title': 'Payload',
+        'body': payload
+      }
+    }
+  }
+
 def _build_override_message():
   """Construct common notification message with overrides.
 
@@ -115,6 +135,15 @@ def main():
     print('FCM request body for override message:')
     print(json.dumps(override_message, indent=2))
     _send_fcm_message(override_message)
+  elif args.message and args.message == 'random-payload':
+    currentTime = datetime.now()
+    for i in range(50):
+      random_payload = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(100))
+      common_message = _build_specific_message(random_payload)
+      print('FCM request body for message using common notification object:')
+      print(json.dumps(common_message, indent=2))
+      _send_fcm_message(common_message)
+    print('Time spent: ', datetime.now() - currentTime)
   else:
     print('''Invalid command. Please use one of the following commands:
 python messaging.py --message=common-message
