@@ -85,7 +85,7 @@ def _build_specific_message(payload):
     'message': {
       'token': 'dtV4OImuR2w:APA91bELHmd9MDpnOKj4j6CZxrGyuYp6nSplILc7Hh8oEOdUILi6R_DCJ5-pKK2mKizPD_m4__7dfq37nMVCYE1gd4L964zTXZUxqR4VdjEfFvDu4eZf6VFCCy-VunDRy2q_KXEE-xBX',
       'notification': {
-        'title': 'Payload',
+        'title': payload,
         'body': payload
       }
     }
@@ -139,6 +139,33 @@ def main():
     currentTime = datetime.now()
     for i in range(50):
       random_payload = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(100))
+      common_message = _build_specific_message(random_payload)
+      print('FCM request body for message using common notification object:')
+      print(json.dumps(common_message, indent=2))
+      _send_fcm_message(common_message)
+    print('Time spent: ', datetime.now() - currentTime)
+  elif args.message and args.message == 'random-payload-min':
+    currentTime = datetime.now()
+    for i in range(25):
+      random_payload = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(100))
+      common_message = _build_specific_message(random_payload)
+      print('FCM request body for message using common notification object:')
+      print(json.dumps(common_message, indent=2))
+      _send_fcm_message(common_message)
+    print('Time spent: ', datetime.now() - currentTime)
+  elif args.message and args.message == 'random-payload-avg':
+    currentTime = datetime.now()
+    for i in range(25):
+      random_payload = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(500))
+      common_message = _build_specific_message(random_payload)
+      print('FCM request body for message using common notification object:')
+      print(json.dumps(common_message, indent=2))
+      _send_fcm_message(common_message)
+    print('Time spent: ', datetime.now() - currentTime)
+  elif args.message and args.message == 'random-payload-max':
+    currentTime = datetime.now()
+    for i in range(25):
+      random_payload = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(1000))
       common_message = _build_specific_message(random_payload)
       print('FCM request body for message using common notification object:')
       print(json.dumps(common_message, indent=2))
