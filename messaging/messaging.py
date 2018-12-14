@@ -15,7 +15,7 @@ import requests
 
 from oauth2client.service_account import ServiceAccountCredentials
 
-PROJECT_ID = '<YOUR-PROJECT-ID>'
+PROJECT_ID = 'distys-week3-client'
 BASE_URL = 'https://fcm.googleapis.com'
 FCM_ENDPOINT = 'v1/projects/' + PROJECT_ID + '/messages:send'
 FCM_URL = BASE_URL + '/' + FCM_ENDPOINT
@@ -63,7 +63,7 @@ def _build_common_message():
   """
   return {
     'message': {
-      'topic': 'news',
+      'token': 'dtV4OImuR2w:APA91bELHmd9MDpnOKj4j6CZxrGyuYp6nSplILc7Hh8oEOdUILi6R_DCJ5-pKK2mKizPD_m4__7dfq37nMVCYE1gd4L964zTXZUxqR4VdjEfFvDu4eZf6VFCCy-VunDRy2q_KXEE-xBX',
       'notification': {
         'title': 'FCM Notification',
         'body': 'Notification from FCM'
